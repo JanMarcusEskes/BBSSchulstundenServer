@@ -15,14 +15,14 @@ namespace Server
 {
     class Program
     {
-		static List<string> startupArgs = new List<string>();
+        static List<string> startupArgs = new List<string>();
         static bool error = false;
-		static bool updated = false;
-		static bool warning = false;
-		
+        static bool updated = false;
+        static bool warning = false;
+
         static void Main(string[] args)
         {
-			getArgs(args);
+            getArgs(args);
             startupText();
             startup();
             Console.Read();
@@ -40,17 +40,11 @@ namespace Server
             Console.WriteLine("-Porterreichbarkeit einrichten");
             yellow("NICHT EINGERICHTET");
             checkForError();
-			
-			Console.WriteLine("-Auf Aktualisierung prüfen");
-			//if (!updated){
-				checkForUpdate();
-				checkForError();	
-			//}
-			//else{
-			//	green("Update wurde erfolgreich instaliert")
-			//}
-			
-			
+
+            Console.WriteLine("-Auf Aktualisierung prüfen");
+            checkForUpdate();
+            checkForError();
+
 
         }
         static void checkInternetConnection()
@@ -60,14 +54,17 @@ namespace Server
             {
                 PingReply reply = ping.Send("www.google.de", 1000);
                 if (reply.Status == IPStatus.Success)
-                {
                     green("OK");
-                }
+                else
+                    red("Es ist keine Verbindung zum Internet möglich!\nBitte überprüfen Sie die Firewall- und Netzwerkeinstellungen.");
             }
-            catch (Exception ex)
+            catch 
             {
-                red(ex.Message);
+                red("Es ist keine Verbindung zum Internet möglich!\nBitte überprüfen Sie die Firewall- und Netzwerkeinstellungen.");
             }
+
+
+
         }
         static void checkForUpdate()
         {
@@ -78,7 +75,7 @@ namespace Server
             {
                 downloadService.DownloadFile("http://janmarcus.eskes.de/BBSProjekt/BBSSchulstundenServer.exe", Path.GetTempPath() + "BBSSchulstundenServer.version");
                 FileVersionInfo online = FileVersionInfo.GetVersionInfo(Path.GetTempPath() + "BBSSchulstundenServer.version");
-                FileVersionInfo installed= FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location);
+                FileVersionInfo installed = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location);
 
                 onlineVersion = new Version(string.Format("{0}.{1}.{2}.{3}", online.FileMajorPart, online.FileMinorPart, online.FileBuildPart, online.FilePrivatePart));
                 installedVersion = new Version(string.Format("{0}.{1}.{2}.{3}", installed.FileMajorPart, installed.FileMinorPart, installed.FileBuildPart, installed.FilePrivatePart));
@@ -86,20 +83,20 @@ namespace Server
             catch (Exception ex)
             {
                 yellow("Es ist ein Fehler beim Update aufgetreten!\nMeldung: " + ex.Message);
-				return;
+                return;
             }
-			if (updated && onlineVersion == installedVersion)
-			{
-				green("Update wurde erfolgreich instaliert");
-				return;
-			}
+            if (updated && onlineVersion == installedVersion)
+            {
+                green("Update wurde erfolgreich instaliert");
+                return;
+            }
             else if (onlineVersion > installedVersion)
             {
                 yellow("Es gibt eine neuere Version. Wollen Sie den Server aktualisieren? (Y/N)");
                 string antwort = Console.ReadLine();
                 if (antwort == "y" || antwort == "Y")
                 {
-					warning = false;
+                    warning = false;
                     updateServer();
                 }
                 else
@@ -208,7 +205,7 @@ namespace Server
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine(eingabe);
             Console.ForegroundColor = ConsoleColor.White;
-			warning = true;
+            warning = true;
         }
         static void startupText()
         {
@@ -223,7 +220,7 @@ namespace Server
         }
         static void checkForError()
         {
-			
+
             if (error)
             {
                 red("Es ist ein kritischer Systemfehler aufgetreten");
@@ -231,16 +228,16 @@ namespace Server
                 Environment.Exit(0x0001);
             }
         }
-		static void getArgs(string[] args)
-		{
-			if (args.Length != 0)
-			{
-				foreach (string argument in args)
-				{
-					startupArgs.Add(argument);
-					if (argument.Contains("updated")) updated = true;
-				}
-			}
-		}
-	}
+        static void getArgs(string[] args)
+        {
+            if (args.Length != 0)
+            {
+                foreach (string argument in args)
+                {
+                    startupArgs.Add(argument);
+                    if (argument.Contains("updated")) updated = true;
+                }
+            }
+        }
+    }
 }
