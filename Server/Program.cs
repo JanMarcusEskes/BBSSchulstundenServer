@@ -37,10 +37,6 @@ namespace Server
             checkInternetConnection();
             checkForError();
 
-            Console.WriteLine("-Porterreichbarkeit einrichten");
-            yellow("NICHT EINGERICHTET");
-            checkForError();
-
             Console.WriteLine("-Auf Aktualisierung prüfen");
             checkForUpdate();
             checkForError();
