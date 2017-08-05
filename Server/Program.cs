@@ -98,7 +98,8 @@ namespace Server
                     yellow("Update wurde übersprungen");
                 }
             }
-            else if (Environment.UserName == "Jan-Marcus")
+            //Nur für die Entwicklung
+            else if (File.Exists(@"C:\Program Files\FileZilla FTP Client\filezilla.exe"))
             {
                 yellow("Die lokale Version ist neuer als die Onlineversion. Wollen Sie sie FileZilla startem? (Y/N)");
                 string antwort = Console.ReadLine();
