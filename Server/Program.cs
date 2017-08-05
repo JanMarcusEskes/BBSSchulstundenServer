@@ -15,19 +15,15 @@ namespace Server
 {
     class Program
     {
-        static List<string> startupArgs = new List<string>();
+        public static Source.Settings settings = Source.Settings.Load();
         static bool error = false;
-        static bool updated = false;
-        static bool warning = false;
 
         static void Main(string[] args)
         {
-            getArgs(args);
             startupText();
             startup();
             Console.Read();
         }
-
 
         static void startup()
         {
@@ -41,6 +37,9 @@ namespace Server
             checkForUpdate();
             checkForError();
 
+            Console.WriteLine("-Gespeicherte Einstellungen laden");
+            checkSettings();
+            checkForError();
 
         }
         static void checkInternetConnection()
@@ -81,7 +80,7 @@ namespace Server
                 yellow("Es ist ein Fehler beim Update aufgetreten!\nMeldung: " + ex.Message);
                 return;
             }
-            if (updated && onlineVersion == installedVersion)
+            if (onlineVersion == installedVersion)
             {
                 green("Update wurde erfolgreich instaliert");
                 return;
@@ -92,7 +91,6 @@ namespace Server
                 string antwort = Console.ReadLine();
                 if (antwort == "y" || antwort == "Y")
                 {
-                    warning = false;
                     updateServer();
                 }
                 else
@@ -183,6 +181,39 @@ namespace Server
             // diese Anwendung beenden
             global::System.Environment.Exit(0);
         }
+        static void checkSettings()
+        {
+            if (settings.User() == null || settings.Passwort() == null)
+                setSettings();
+
+            if (Source.WebService.checkCredentials())
+                green("Anmeldedaten gültig");
+            else
+            {
+                red("Anmeldedaten ungültig");
+                Console.WriteLine("Wollen Sie die Anmeldedaten ändern? (Y/N)");
+                string eingabe = Console.ReadLine();
+                if (eingabe == "Y" || eingabe == "y")
+                {
+                    Forms.Credentials credentials = new Forms.Credentials();
+                    credentials.ShowDialog();
+                    settings.Save(settings);
+                    checkSettings();
+                }
+                else
+                    return;
+
+            }
+            return;
+        }
+        static void setSettings()
+        {
+            yellow("Es wurden keine Anmeldedaten gefunden");
+            Forms.Credentials credentials = new Forms.Credentials();
+            credentials.ShowDialog();
+            settings.Save(settings);
+
+        }
         static void red(String eingabe)
         {
             Console.ForegroundColor = ConsoleColor.Red;
@@ -201,7 +232,6 @@ namespace Server
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine(eingabe);
             Console.ForegroundColor = ConsoleColor.White;
-            warning = true;
         }
         static void startupText()
         {
@@ -222,17 +252,6 @@ namespace Server
                 red("Es ist ein kritischer Systemfehler aufgetreten");
                 Console.Read();
                 Environment.Exit(0x0001);
-            }
-        }
-        static void getArgs(string[] args)
-        {
-            if (args.Length != 0)
-            {
-                foreach (string argument in args)
-                {
-                    startupArgs.Add(argument);
-                    if (argument.Contains("updated")) updated = true;
-                }
             }
         }
     }
