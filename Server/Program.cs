@@ -82,7 +82,7 @@ namespace Server
             }
             if (onlineVersion == installedVersion)
             {
-                green("Update wurde erfolgreich instaliert");
+                green("Dies ist die Aktuelle Version");
                 return;
             }
             else if (onlineVersion > installedVersion)
@@ -98,9 +98,18 @@ namespace Server
                     yellow("Update wurde übersprungen");
                 }
             }
-            else
+            else if (Environment.UserName == "Jan-Marcus")
             {
-                green("Dies ist die Aktuelle Version");
+                yellow("Die lokale Version ist neuer als die Onlineversion. Wollen Sie sie FileZilla startem? (Y/N)");
+                string antwort = Console.ReadLine();
+                if (antwort == "y" || antwort == "Y")
+                {
+                    Process.Start(@"C:\Program Files\FileZilla FTP Client\filezilla.exe");
+                }
+                else
+                {
+                    yellow("Upload wurde übersprungen");
+                }
             }
         }
         static void updateServer()
