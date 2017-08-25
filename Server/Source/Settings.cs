@@ -10,6 +10,7 @@ namespace Server.Source
     {
         public string user;
         public string passwort;
+
         private static string filename
         {
             get { return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Stundenplan_Server.xml"); }

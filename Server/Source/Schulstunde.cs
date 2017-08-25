@@ -17,7 +17,7 @@ namespace Server.Source
         public string Vertreter;
         public string Art;
         public string Info;
-		public static List<Schulstunde> Schulstunden = new List<Schulstunde>();
+		    public static List<Schulstunde> Schulstunden = new List<Schulstunde>();
 		
         override public string ToString()
         {

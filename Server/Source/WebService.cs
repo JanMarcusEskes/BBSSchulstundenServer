@@ -9,8 +9,6 @@ namespace Server.Source
 {
     public static class WebService
     {
-        static string url;
-
         public static bool checkCredentials()
         {
             bool credentials = true;
