@@ -10,7 +10,6 @@ namespace Server.Source
     {
         public string user;
         public string passwort;
-
         private static string filename
         {
             get { return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Stundenplan_Server.xml"); }
@@ -21,7 +20,7 @@ namespace Server.Source
             string temp = null;
             foreach (char tempBuchstabe in newUser)
             {
-                temp += (char)(tempBuchstabe - 15);
+                temp += (char)(tempBuchstabe - 1);
             }
             user = temp;
         }
@@ -32,7 +31,7 @@ namespace Server.Source
                 string temp = String.Empty;
                 foreach (char tempBuchstabe in user)
                 {
-                    temp += (char)(tempBuchstabe + 15);
+                    temp += (char)(tempBuchstabe + 1);
                 }
                 return temp;
             }
@@ -44,7 +43,7 @@ namespace Server.Source
             string temp = null;
             foreach (char tempBuchstabe in newPasswort)
             {
-                temp += (char)(tempBuchstabe - 15);
+                temp += (char)(tempBuchstabe - 1);
             }
             passwort = temp;
         }
@@ -55,7 +54,7 @@ namespace Server.Source
                 string temp = String.Empty;
                 foreach (char tempBuchstabe in passwort)
                 {
-                    temp += (char)(tempBuchstabe + 15);
+                    temp += (char)(tempBuchstabe + 1);
                 }
                 return temp;
             }
