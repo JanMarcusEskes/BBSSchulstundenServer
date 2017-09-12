@@ -38,6 +38,11 @@ namespace Server.Source
                         Reboot();
                         return;
                     }
+                case "reset":
+                    {
+                        Reset();
+                        return;
+                    }
                 case "settings":
                     {
                         Settings();
@@ -75,7 +80,8 @@ namespace Server.Source
             sw.WriteLine("EXIT                          Fährt den Server herunter");
             sw.WriteLine("HELP                          Zeigt diese Liste an.");
             sw.WriteLine("H                             Alias für HELP");
-            sw.WriteLine("REBOOT                        Startet den Server komplett neu"); 
+            sw.WriteLine("REBOOT                        Startet den Server komplett neu");
+            sw.WriteLine("RESET                         Löscht die Einstellungsdatei des Servers");
             sw.WriteLine("SETTINGS                      Ruft den einstellungsdialog auf");
             sw.WriteLine("X                             Alias für EXIT");
             Console.WriteLine(sw);
@@ -91,6 +97,14 @@ namespace Server.Source
         {
             Application.Restart();
             Shutdown();
+        }
+
+        static void Reset()
+        {
+            File.Copy(Source.Settings.Filename, Source.Settings.Filename + "_old");
+            File.Delete(Source.Settings.Filename);
+            Application.Restart();
+            Environment.Exit(0);
         }
         #endregion
     }

@@ -10,7 +10,7 @@ namespace Server.Source
     {
         public string user;
         public string passwort;
-        private static string filename
+        public static string Filename
         {
             get { return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Stundenplan_Server.xml"); }
         }
@@ -67,7 +67,7 @@ namespace Server.Source
             StreamWriter writer = null;
             try
             {
-                writer = File.CreateText(filename);
+                writer = File.CreateText(Filename);
                 serializer.Serialize(writer, Einstellungen);
             }
             catch (Exception ex)
@@ -83,13 +83,13 @@ namespace Server.Source
         public static Settings Load()
         {
             //Datei exsistiert nicht
-            if (!File.Exists(filename))
+            if (!File.Exists(Filename))
             {
                 return new Settings();
             }
 
             XmlSerializer serializer = serializer = new XmlSerializer(typeof(Settings));
-            using (StreamReader reader = File.OpenText(filename))
+            using (StreamReader reader = File.OpenText(Filename))
             {
                 try
                 {
