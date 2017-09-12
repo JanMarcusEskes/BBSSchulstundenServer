@@ -36,7 +36,7 @@ namespace Server.Source
                 return temp;
             }
             else
-                return null;
+                return "";
         }
         public void Passwort(string newPasswort)
         {
@@ -59,7 +59,7 @@ namespace Server.Source
                 return temp;
             }
             else
-                return null;
+                return "";
         }
         public void Save(Settings Einstellungen)
         {
