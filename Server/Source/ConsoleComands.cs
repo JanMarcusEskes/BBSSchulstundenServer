@@ -38,6 +38,11 @@ namespace Server.Source
                         Reboot();
                         return;
                     }
+                case "reload":
+                    {
+                        WebService.GetCode();
+                        return;
+                    }
                 case "reset":
                     {
                         Reset();
@@ -81,6 +86,7 @@ namespace Server.Source
             sw.WriteLine("HELP                          Zeigt diese Liste an.");
             sw.WriteLine("H                             Alias für HELP");
             sw.WriteLine("REBOOT                        Startet den Server komplett neu");
+            sw.WriteLine("RELOAD                        Aktualisiert den Quellcode im Zwichenspeicher");
             sw.WriteLine("RESET                         Löscht die Einstellungsdatei des Servers");
             sw.WriteLine("SETTINGS                      Ruft den einstellungsdialog auf");
             sw.WriteLine("X                             Alias für EXIT");

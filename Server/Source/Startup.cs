@@ -16,7 +16,7 @@ namespace Server.Source
     public static class Startup
     {
         static Settings settings;
-        static bool error = false;
+        public static bool error = false;
         public static void InitStartup(Settings s)
         {
             settings = s;
@@ -34,6 +34,10 @@ namespace Server.Source
 
             Console.WriteLine("-Gespeicherte Einstellungen laden");
             checkSettings();
+            checkForError();
+
+            Console.WriteLine("-Quellcode in Zwichenspeicher");
+            WebService.GetCode();
             checkForError();
 
         }
@@ -191,7 +195,7 @@ namespace Server.Source
             if (settings.User() == null || settings.Passwort() == null)
                 setSettings();
 
-            if (Source.WebService.checkCredentials())
+            if (Source.WebService.CheckCredentials())
                 green("Anmeldedaten gültig");
             else
             {
@@ -219,20 +223,20 @@ namespace Server.Source
             settings.Save(settings);
 
         }
-        static void red(String eingabe)
+        public static void red(String eingabe)
         {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine(eingabe);
             Console.ForegroundColor = ConsoleColor.White;
             error = true;
         }
-        static void green(String eingabe)
+        public static void green(String eingabe)
         {
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine(eingabe);
             Console.ForegroundColor = ConsoleColor.White;
         }
-        static void yellow(String eingabe)
+        public static void yellow(String eingabe)
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine(eingabe);

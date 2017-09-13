@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Forms;
 
-namespace Server.Source
+namespace Hausaufgabenplan
 {
     public class Schulstunde
     {
@@ -17,13 +17,25 @@ namespace Server.Source
         public string Vertreter;
         public string Art;
         public string Info;
-		    public static List<Schulstunde> Schulstunden = new List<Schulstunde>();
-		
-        override public string ToString()
+        public static List<Schulstunde> Schulstunden = new List<Schulstunde>();
+
+        /*public ListViewItem ToListViewItem()
         {
-            string ausgabe = Position + "," + Lehrer + "," + Fach + "," + Raum + "," + Klasse + "," + Vertreter + "," + Art + "," + Info;
-            return ausgabe;
-        }
-		
+            ListViewItem lstvItem = new ListViewItem();
+            lstvItem.Text = Position;
+            lstvItem.Name = Position + ';' + Klasse;
+            lstvItem.SubItems.Add(Lehrer);
+            lstvItem.SubItems.Add(Fach);
+            lstvItem.SubItems.Add(Raum);
+            lstvItem.SubItems.Add(Klasse);
+            lstvItem.SubItems.Add(Vertreter);
+            lstvItem.SubItems.Add(Art);
+            lstvItem.SubItems.Add(Info);
+            return lstvItem;
+
+            //   string ausgabe = Position + "    " + Lehrer + "    " + Fach + "    " + Raum + "    " + Klasse + "    " + Vertreter + "    " + Art + "    " + Info;
+            //   return ausgabe;
+        }*/
     }
+
 }
