@@ -192,7 +192,7 @@ namespace Server.Source
         }
         static void checkSettings()
         {
-            if (settings.User() == null || settings.Passwort() == null)
+            if (settings.User() == "" || settings.Passwort() == "")
                 setSettings();
 
             if (Source.WebService.CheckCredentials())

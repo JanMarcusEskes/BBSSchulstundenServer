@@ -107,7 +107,6 @@ namespace Server.Source
 
         static void Reset()
         {
-            File.Copy(Source.Settings.Filename, Source.Settings.Filename + "_old");
             File.Delete(Source.Settings.Filename);
             Application.Restart();
             Environment.Exit(0);
